@@ -11,8 +11,12 @@ from langchain.schema import Document
 from langchain_community.embeddings import HuggingFaceEmbeddings
 import tempfile
 
+
 # Load environment variables
 load_dotenv()
+
+PINECONE_API_KEY=os.getenv("PINECONE_API_KEY")
+OPEN_ROUTER_KEY=os.getenv("OPEN_ROUTER_KEY")
 
 # Page config
 st.set_page_config(
@@ -38,12 +42,11 @@ with st.sidebar:
     openrouter_key = st.text_input(
         "OpenRouter API Key",
         type="password",
-        value=os.getenv("OPENROUTER_API_KEY", "")
+        value=OPEN_ROUTER_KEY
     )
     pinecone_key = st.text_input(
-        "Pinecone API Key",
-        type="password",
-        value=os.getenv("PINECONE_API_KEY", "")
+        "Pinecone API Key",\
+        value=PINECONE_API_KEY
     )
     
     # Pinecone settings
@@ -109,7 +112,7 @@ if st.button("🚀 Initialize RAG System", use_container_width=True):
                         name=index_name,
                         dimension=embedding_dimension,
                         metric="cosine",
-                        spec=ServerlessSpec(cloud="aws", region="us-east-1")
+                        spec=ServerlessSpec(cl2oud="aws", region="us-east-1")
                     )
                     st.info(f"Created new index: {index_name}")
 
